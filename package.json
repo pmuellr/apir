@@ -1,0 +1,35 @@
+{
+    "name": "apir",
+    "description": "API thinger",
+    "author": "Patrick Mueller",
+    "version": "0.1.0",
+    "tags": [
+        "api"
+    ],
+    "licenses": [
+        {
+            "type": "Apache License"
+        }
+    ],
+    "directories": {
+        "lib": "./lib"
+    },
+    "main": "./lib/api",
+    "bin":          {
+        "apir":     "./bin/apir.js"
+    },
+    "homepage": "http://rtpgsa.ibm.com/~pmuellr/apir",
+    "dependencies": {
+        "coffee-script":    "1.6.x",
+        "mustache":         "0.7.x",
+        "nopt":             "2.1.x",
+        "underscore":       "1.4.x"
+    },
+    "devDependencies": {
+        "wr":               "1.2.x"
+    },
+    "repository": {
+        "type": "git",
+        "url": "http://rtpgsa.ibm.com/~pmuellr/git-repos/apir/.git"
+    }
+}
