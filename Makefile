@@ -25,6 +25,7 @@ build-test: build test
 build:
 	@mkdir -p lib
 	@rm -rf lib/*
+	@cp lib-src/*.html lib
 	@$(COFFEEC) --output lib  lib-src/*.coffee 
 
 #-------------------------------------------------------------------------------
@@ -32,30 +33,19 @@ test:
 	@mkdir -p tmp
 
 	@node bin/apir.js \
-		--gen bootstrap-so \
-		--verbose \
-		--output tmp/us-weather.http.bs \
-		    examples/us-weather.http
-
-	@node bin/apir.js \
-		--gen json \
 		--gen html \
+		--gen json \
 		--verbose \
 		--output tmp/us-weather.http \
 		    examples/us-weather.http
 
 	@node bin/apir.js \
-		--gen bootstrap-so \
-		--verbose \
-		--output tmp/us-weather.js.bs \
-		    examples/us-weather.js
-
-	@node bin/apir.js \
-		--gen json \
 		--gen html \
+		--gen json \
 		--verbose \
 		--output tmp/us-weather.js \
 		    examples/us-weather.js
+
 
 #-------------------------------------------------------------------------------
 # Copyright 2013 Patrick Mueller

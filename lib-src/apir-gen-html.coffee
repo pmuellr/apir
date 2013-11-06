@@ -3,6 +3,8 @@
 fs   = require "fs"
 path = require "path"
 
+gen_html = require "./apir-gen-html"
+
 PROGRAM = path.basename __filename
 PROGRAM = (PROGRAM.match /(.*)\..*/)[1]
 
@@ -11,11 +13,16 @@ exports.process = (api, options) ->
     {output, logger} = options
 
     logger = logger.newLogger PROGRAM
-    fname  = "#{output}.html"
 
-    logger.log "generating #{fname}"
+    htmlFile    = path.join __dirname, "apir-gen-html.html"
+    htmlContent = fs.readFileSync htmlFile, "utf8"
 
-    fs.writeFileSync fname, JSON.stringify(api, null, 4)
+    htmlContent = htmlContent.replace /%api-title%/g, api.title
+    htmlContent = htmlContent.replace /%api-json%/g,  JSON.stringify(api, null, 4)
+
+    outFile  = "#{output}.html"
+    logger.log "generating #{outFile}"
+    fs.writeFileSync outFile, htmlContent
 
 #-------------------------------------------------------------------------------
 # Copyright 2013 Patrick Mueller

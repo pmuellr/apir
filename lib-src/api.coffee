@@ -34,6 +34,8 @@ module.exports = class API
     clone: ->
         clone = new API
 
+        clone.title   = @title if @title?
+        clone.desc    = @desc  if @desc?
         clone.https   = JSON.parse JSON.stringify @https  
         clone.funcs   = JSON.parse JSON.stringify @funcs  
         clone.objects = JSON.parse JSON.stringify @objects
@@ -64,7 +66,7 @@ module.exports = class API
 
     #---------------------------------------------------------------------------
     toJSON: ->  
-        { @https , @funcs, @objects }
+        { @title, @desc, @https , @funcs, @objects }
 
 #-------------------------------------------------------------------------------
 # Copyright 2013 Patrick Mueller

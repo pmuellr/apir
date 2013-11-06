@@ -1,0 +1,93 @@
+<!doctype html>
+<html ng-app="app">
+<meta charset="utf-8"> 
+<head>
+    <title>%api-title%</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }    
+    </style>
+</head>
+<body ng-controller="body">
+
+<div class="container">
+
+    <h2 ng-bind="api.title"></h1>
+
+    <p ng-bind="api.desc"></p>
+
+    <!-- <pre ng-bind="json"></pre> -->
+
+    <div ng-show="hasHttps" class="ng-cloak">
+        <h2>HTTP APIs</h2>
+        <div ng-repeat="http in api.https">
+            <h3>{{http.name}}</h3>
+        </div>
+    </div>
+    
+    <div ng-show="exports" class="ng-cloak">
+        <h2>module exports</h2>
+
+        <h4>properties</h4>
+        <div ng-repeat="property in exports.properties">
+            <h5>{{property.name}}</h5>
+        </div>
+    </div>
+    
+    <div ng-show="hasFunctions" class="ng-cloak">
+        <h2>functions</h2>
+        <div ng-repeat="func in api.funcs">
+            <h3>{{func.name}}</h3>
+        </div>
+    </div>
+    
+    <div ng-show="hasObjects" class="ng-cloak">
+        <h2>objects</h2>
+        <div ng-repeat="object in api.objects">
+            <h3>{{object.name}}</h3>
+
+            <h4>properties</h4>
+            <div ng-repeat="property in object.properties">
+                <h5>{{property.name}}</h5>
+            </div>
+        </div>
+    </div>
+
+</div>
+    
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>        
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+ 
+<script>
+angular.module("app", []);
+
+angular.module("app").controller("body", function($scope, api){
+    api = JSON.parse(JSON.stringify(api))
+
+    $scope.api = api
+
+    $scope.hasHttps   = 0 !== api.https.length
+    $scope.hasFuncs   = 0 !== api.funcs.length
+    $scope.hasObjects = 0 !== api.objects.length
+
+    $scope.json       = JSON.stringify(api, null, 4)
+
+    $scope.exports = null
+    for (var i=0; i<api.objects.length; i++) {
+        if (api.objects[i].name = "exports") {
+            $scope.exports = api.objects[i]
+            api.objects.splice(i,1)
+            break
+        }
+    }
+
+});
+
+angular.module("app").constant("api", %api-json%);
+</script>
+</body>
+</html>

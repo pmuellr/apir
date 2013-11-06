@@ -12,8 +12,6 @@ pkg   = require "../package.json"
 
 BuiltInGenerators = [
     "html"
-    "bootstrap"
-    "bootstrap-so"
     "json"
 ]
 
@@ -31,13 +29,14 @@ cli.run = ->
         verbose: options.verbose
         dumpJS:  options.dumpJS
 
-    for file in files
-        try 
-            api.readAPI file
-        catch err
-            api.log "error reading #{file}: #{err}"
-            api.log "stack:\n#{err.stack}" if err.stack
-            return
+    file = files[0]
+
+    try 
+        api.readAPI file
+    catch err
+        api.log "error reading #{file}: #{err}"
+        api.log "stack:\n#{err.stack}" if err.stack
+        return
 
     for genName in options.gen
         apiGen = api.clone()
@@ -127,10 +126,8 @@ help = ->
             to generate some output.  Predefined generators
             include:
 
-                - html              generates plain old HTML
-                - bootstrap         generates HTML using bootstrap
-                - bootstrap-so      generates stand-alone bootstrap HTML
-                - json              generates a JSON file
+                - html   generates HTML using bootstrap and angular
+                - json   generates a JSON file
 
             The default generator if none is specified is `html`.
 

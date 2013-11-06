@@ -1,6 +1,6 @@
 # Licensed under the Apache License. See footer for details.
 
-title "us weather APIs"
+title "us weather HTTP APIs"
 
 desc """
     APIs to return weather information for US locations

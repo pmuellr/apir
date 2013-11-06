@@ -34,7 +34,6 @@ Directives = """
 # called from api.readAPI(fileName)
 #-------------------------------------------------------------------------------
 reader.readAPI = (api, fileName) ->
-    fileName = path.resolve fileName
     api.vlog "processing #{fileName}"
 
     rdr = new Reader api, fileName
@@ -64,7 +63,7 @@ class Reader
         for name in BuiltInTypes
             @names[name] = name
 
-        @__filename = path.resolve fileName
+        @__filename = fileName
         @__dirname  = path.dirname @__filename
 
 
@@ -216,9 +215,9 @@ class Reader
 
     #---------------------------------------------------------------------------
     directive_include: (fileName) ->
-        fullName = path.resolve @__dirname, fileName
+        relName = path.normalize path.join(@__dirname, fileName)
 
-        reader.readAPI @api, fullName
+        reader.readAPI @api, relName
 
         for func in @api.funcs
             @names[func.name] = func.name
